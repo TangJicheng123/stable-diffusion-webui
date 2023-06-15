@@ -861,6 +861,7 @@ class StableDiffusionProcessingTxt2Img(StableDiffusionProcessing):
     sampler = None
 
     def __init__(self, enable_hr: bool = False, denoising_strength: float = 0.75, firstphase_width: int = 0, firstphase_height: int = 0, hr_scale: float = 2.0, hr_upscaler: str = None, hr_second_pass_steps: int = 0, hr_resize_x: int = 0, hr_resize_y: int = 0, hr_sampler_name: str = None, hr_prompt: str = '', hr_negative_prompt: str = '', **kwargs):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.__init__")
         super().__init__(**kwargs)
         self.enable_hr = enable_hr
         self.denoising_strength = denoising_strength
@@ -895,6 +896,7 @@ class StableDiffusionProcessingTxt2Img(StableDiffusionProcessing):
         self.hr_uc = None
 
     def init(self, all_prompts, all_seeds, all_subseeds):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.init")
         if self.enable_hr:
             if self.hr_sampler_name is not None and self.hr_sampler_name != self.sampler_name:
                 self.extra_generation_params["Hires sampler"] = self.hr_sampler_name
@@ -966,6 +968,7 @@ class StableDiffusionProcessingTxt2Img(StableDiffusionProcessing):
                 self.extra_generation_params["Hires upscaler"] = self.hr_upscaler
 
     def sample(self, conditioning, unconditional_conditioning, seeds, subseeds, subseed_strength, prompts):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.sample")
         self.sampler = sd_samplers.create_sampler(self.sampler_name, self.sd_model)
 
         latent_scale_mode = shared.latent_upscale_modes.get(self.hr_upscaler, None) if self.hr_upscaler is not None else shared.latent_upscale_modes.get(shared.latent_upscale_default_mode, "nearest")
@@ -1064,10 +1067,12 @@ class StableDiffusionProcessingTxt2Img(StableDiffusionProcessing):
         return samples
 
     def close(self):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.close")
         self.hr_c = None
         self.hr_uc = None
 
     def setup_prompts(self):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.setup_prompts")
         super().setup_prompts()
 
         if not self.enable_hr:
@@ -1093,6 +1098,7 @@ class StableDiffusionProcessingTxt2Img(StableDiffusionProcessing):
         self.all_hr_negative_prompts = [shared.prompt_styles.apply_negative_styles_to_prompt(x, self.styles) for x in self.all_hr_negative_prompts]
 
     def setup_conds(self):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.setup_conds")
         super().setup_conds()
 
         if self.enable_hr:
@@ -1100,6 +1106,7 @@ class StableDiffusionProcessingTxt2Img(StableDiffusionProcessing):
             self.hr_c = self.get_conds_with_caching(prompt_parser.get_multicond_learned_conditioning, self.hr_prompts, self.steps * self.step_multiplier, self.cached_c)
 
     def parse_extra_network_prompts(self):
+        print("[tangjicheng] call StableDiffusionProcessingTxt2Img.parse_extra_network_prompts")
         res = super().parse_extra_network_prompts()
 
         if self.enable_hr:
