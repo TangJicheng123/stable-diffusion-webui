@@ -436,6 +436,7 @@ model_data = SdModelData()
 
 
 def load_model(checkpoint_info=None, already_loaded_state_dict=None):
+    print("[tangjicheng] call load_model")
     from modules import lowvram, sd_hijack
     checkpoint_info = checkpoint_info or select_checkpoint()
 
@@ -512,6 +513,7 @@ def load_model(checkpoint_info=None, already_loaded_state_dict=None):
 
 
 def reload_model_weights(sd_model=None, info=None):
+    print("[tangjicheng] call reload_model_weights")
     from modules import lowvram, devices, sd_hijack
     checkpoint_info = info or select_checkpoint()
 

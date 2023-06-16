@@ -588,6 +588,7 @@ def create_infotext(p, all_prompts, all_seeds, all_subseeds, comments=None, iter
 
 
 def process_images(p: StableDiffusionProcessing) -> Processed:
+    print("[tangjicheng] call process_images")
     stored_opts = {k: opts.data[k] for k in p.override_settings.keys()}
 
     try:
@@ -660,7 +661,9 @@ def process_images_inner(p: StableDiffusionProcessing) -> Processed:
         model_hijack.embedding_db.load_textual_inversion_embeddings()
 
     if p.scripts is not None:
+        print("[tangjicheng] call p.scripts is not None")
         p.scripts.process(p)
+        print("[tangjicheng] after call p.scripts is not None")
 
     infotexts = []
     output_images = []

@@ -83,6 +83,7 @@ class Script:
         pass
 
     def process(self, p, *args):
+        print("[tangjicheng] called webui Script.process")
         """
         This function is called before processing begins for AlwaysVisible scripts.
         You can modify the processing object (p) here, inject hooks, etc.
@@ -427,6 +428,7 @@ class ScriptRunner:
         return inputs
 
     def run(self, p, *args):
+        print(f"[tangjicheng] call webui ScriptRunner.run, self.scripts len: {len(self.scripts)}, script_index: {args[0]}")
         script_index = args[0]
 
         if script_index == 0:
@@ -445,8 +447,12 @@ class ScriptRunner:
         return processed
 
     def process(self, p):
+        print(f"[tangjicheng] len(self.alwayson_scripts): {len(self.alwayson_scripts)}")
+        i = 0
         for script in self.alwayson_scripts:
             try:
+                print(f"i = {i}")
+                i += 1
                 script_args = p.script_args[script.args_from:script.args_to]
                 script.process(p, *script_args)
             except Exception:
